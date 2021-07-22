@@ -1,4 +1,4 @@
-import sharp from 'sharp'
+import sharp, { FitEnum } from 'sharp'
 
 const createJPG = async (
   srcPath: string,
