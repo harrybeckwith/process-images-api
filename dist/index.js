@@ -40,9 +40,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var sharp_1 = __importDefault(require("sharp"));
 var createImage_1 = __importDefault(require("./helpers/createImage"));
 var createPath_1 = __importDefault(require("./helpers/createPath"));
+var createJPG_1 = __importDefault(require("./helpers/createJPG"));
 var app = express_1.default();
 var port = 3000;
 app.use(express_1.default.static(__dirname));
@@ -52,26 +52,13 @@ app.get('/api', function (req, res) {
     res.send(img);
     var srcPath = createPath_1.default(__dirname, '/assets/full/encenadaport.jpg');
     var dstPath = createPath_1.default(__dirname, '/assets/thumb/encenadaport.jpg');
-    var resizeJPEG = function (srcPath, width, height, dstPath) { return __awaiter(_this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, sharp_1.default(srcPath)
-                        .resize(width, height)
-                        .toFormat('jpg')
-                        .toFile(dstPath)];
-                case 1:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    }); };
     var resize = function () { return __awaiter(_this, void 0, void 0, function () {
         var err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, resizeJPEG(srcPath, 200, 300, dstPath)];
+                    return [4 /*yield*/, createJPG_1.default(srcPath, 200, 300, dstPath)];
                 case 1:
                     _a.sent();
                     return [3 /*break*/, 3];
