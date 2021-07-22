@@ -41,7 +41,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var sharp_1 = __importDefault(require("sharp"));
-var path_1 = __importDefault(require("path"));
 var createImage_1 = __importDefault(require("./helpers/createImage"));
 var createPath_1 = __importDefault(require("./helpers/createPath"));
 var app = express_1.default();
@@ -51,18 +50,15 @@ app.get('/api', function (req, res) {
     var _this = this;
     var img = createImage_1.default("/assets/full/" + req.query.filename + ".jpg", req.query.width, req.query.height);
     res.send(img);
-    var srcFilePath = createPath_1.default('/assets/full/encenadaport.jpg');
-    // const srcFilePath: string = path.join(
-    //     __dirname + '/assets/full/encenadaport.jpg'
-    // );
-    var dstFilePath = path_1.default.join(__dirname + '/assets/thumb/encenadaport.jpg');
-    var resizeJPEG = function (srcPath, width, height, dstFilePath) { return __awaiter(_this, void 0, void 0, function () {
+    var srcPath = createPath_1.default(__dirname, '/assets/full/encenadaport.jpg');
+    var dstPath = createPath_1.default(__dirname, '/assets/thumb/encenadaport.jpg');
+    var resizeJPEG = function (srcPath, width, height, dstPath) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, sharp_1.default(srcPath)
                         .resize(width, height)
                         .toFormat('jpg')
-                        .toFile(dstFilePath)];
+                        .toFile(dstPath)];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -75,7 +71,7 @@ app.get('/api', function (req, res) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, resizeJPEG(srcFilePath, 200, 300, dstFilePath)];
+                    return [4 /*yield*/, resizeJPEG(srcPath, 200, 300, dstPath)];
                 case 1:
                     _a.sent();
                     return [3 /*break*/, 3];

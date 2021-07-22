@@ -11,25 +11,26 @@ app.use(express.static(__dirname));
 app.get('/api', function (req, res) {
     const img  = createImage(`/assets/full/${req.query.filename}.jpg`, req.query.width, req.query.height)
     res.send(img)
-    const srcFilePath: string = createPath(__dirname, '/assets/full/encenadaport.jpg')
-    const dstFilePath: string = createPath(__dirname, '/assets/thumb/encenadaport.jpg')
+    
+    const srcPath: string = createPath(__dirname, '/assets/full/encenadaport.jpg')
+    const dstPath: string = createPath(__dirname, '/assets/thumb/encenadaport.jpg')
     
     const resizeJPEG = async (
         srcPath: string,
         width: number,
         height: number,
-        dstFilePath: string
+        dstPath: string
     ) => {
         await sharp(srcPath)
             .resize(width, height)
             .toFormat('jpg')
-            .toFile(dstFilePath);
+            .toFile(dstPath);
     };
 
 
     const resize = async () => {
         try {
-            await resizeJPEG(srcFilePath, 200, 300, dstFilePath);
+            await resizeJPEG(srcPath, 200, 300, dstPath);
         } catch (err) {
             console.log(err)
         }
