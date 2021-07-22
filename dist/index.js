@@ -43,6 +43,7 @@ var express_1 = __importDefault(require("express"));
 var sharp_1 = __importDefault(require("sharp"));
 var path_1 = __importDefault(require("path"));
 var createImage_1 = __importDefault(require("./helpers/createImage"));
+var createPath_1 = __importDefault(require("./helpers/createPath"));
 var app = express_1.default();
 var port = 3000;
 app.use(express_1.default.static(__dirname));
@@ -50,9 +51,11 @@ app.get('/api', function (req, res) {
     var _this = this;
     var img = createImage_1.default("/assets/full/" + req.query.filename + ".jpg", req.query.width, req.query.height);
     res.send(img);
-    var srcFilePath = path_1.default.join(__dirname + '/assets/full/encenadaport.jpg');
+    var srcFilePath = createPath_1.default('/assets/full/encenadaport.jpg');
+    // const srcFilePath: string = path.join(
+    //     __dirname + '/assets/full/encenadaport.jpg'
+    // );
     var dstFilePath = path_1.default.join(__dirname + '/assets/thumb/encenadaport.jpg');
-    console.log(srcFilePath);
     var resizeJPEG = function (srcPath, width, height, dstFilePath) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {

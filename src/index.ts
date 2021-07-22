@@ -2,6 +2,7 @@ import express from 'express'
 import sharp from 'sharp'
 import path from 'path'
 import createImage from './helpers/createImage'
+import createPath from './helpers/createPath'
 
 const app = express()
 const port = 3000
@@ -10,17 +11,9 @@ app.use(express.static(__dirname));
 app.get('/api', function (req, res) {
     const img  = createImage(`/assets/full/${req.query.filename}.jpg`, req.query.width, req.query.height)
     res.send(img)
-
-    const srcFilePath: string = path.join(
-        __dirname + '/assets/full/encenadaport.jpg'
-    );
-
-    const dstFilePath: string = path.join(
-        __dirname + '/assets/thumb/encenadaport.jpg'
-    );
-
-    console.log(srcFilePath)
-
+    const srcFilePath: string = createPath(__dirname, '/assets/full/encenadaport.jpg')
+    const dstFilePath: string = createPath(__dirname, '/assets/thumb/encenadaport.jpg')
+    
     const resizeJPEG = async (
         srcPath: string,
         width: number,
