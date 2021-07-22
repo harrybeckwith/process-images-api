@@ -9,12 +9,6 @@ const router = Router()
 router.get('/', function (req, res) {
 // example url for image http://localhost:3000/api/images?filename=encenadaport&width=200&height=200
 // create img from url params
-  const img = createImage(
-      `/assets/full/${req.query.filename}.jpg`,
-      req.query.width,
-      req.query.height
-  )
-  res.send(img)
   const imgName = String(req.query.filename)
   const imgWidth: unknown = Number(req.query.width)
   const imgHeight: unknown = Number(req.query.height)
@@ -32,10 +26,19 @@ router.get('/', function (req, res) {
           )
       } catch (err) {
           console.log(err)
-          res.send(img)
+          res.send('Error: please make sure the image path is for example in this format: /api/images?filename=encenadaport&width=200&height=200')
       }
   }
-  resize()
+  // display image to user
+  resize().then( () => {
+    const img = createImage(
+        `/assets/full/${req.query.filename}.jpg`,
+        req.query.width,
+        req.query.height
+    )
+    res.send(img)
+  })
+
 })
 
 export default router
